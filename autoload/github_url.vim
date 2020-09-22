@@ -37,7 +37,7 @@ function! s:yank(text)
     let curbuf = bufnr("")
     silent! execute s:github_url_scratch . "buffer"
     let failed = setline(line('$'), a:text)
-    execute("silent normal V:call OscYank()\<CR>")
+    execute(g:github_url#yank_command)
     silent! execute curbuf . "buffer"
 endfunction
 
