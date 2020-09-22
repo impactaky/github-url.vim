@@ -1,0 +1,31 @@
+*github-url.txt*
+
+==============================================================================
+USAGE    						*github-url-usage*
+
+>
+	nmap gu <Plug>(github_url-file)
+	vmap gu <Plug>(github_url-line)
+<
+
+
+==============================================================================
+INTERFACE						*github-url-interface*
+
+------------------------------------------------------------------------------
+VARIABLES						*github-url-variables*
+
+g:github_url#yank_command		*g:github_url#yank_command*
+        Default: 'normal yy'
+
+        Change the command used for yank
+        e.g. "silent normal V:call OscYank()\<CR>"
+
+------------------------------------------------------------------------------
+MAPPINGS 					    *github-url-mappings*
+
+<Plug>(github_url-file)	        *<Plug>(github_url-file)*
+        Echo and yank current file URL
+
+<Plug>(github_url-line)	        *<Plug>(github_url-line)*
+        Echo and yank selected line URL
