@@ -1,5 +1,6 @@
 function! s:gen_url()
-    let cands = systemlist('git for-each-ref --points-at=HEAD --format="%(refname)"')
+    let file_dir = expand('%:h')
+    let cands = systemlist('git -C '.file_dir.' for-each-ref --points-at=HEAD --format="%(refname)"')
     let remote = ''
     for cand in cands
         let matcher = matchlist(cand, 'refs/remotes/\(.\{-}\)/.\+')
@@ -11,7 +12,7 @@ function! s:gen_url()
     endfor
 
     if remote != ''
-        let tmp = systemlist("git config --get remote.".remote.".url")
+        let tmp = systemlist('git -C '.file_dir.' config --get remote.'.remote.'.url')
         if !v:shell_error
             let url = tmp[0]
         endif
@@ -21,8 +22,8 @@ function! s:gen_url()
         return -1
     endif
 
-    let hash = systemlist('git rev-parse HEAD')[0]
-    let dir = systemlist('git rev-parse --show-prefix')[0]
+    let hash = systemlist('git -C '.file_dir.' rev-parse HEAD')[0]
+    let dir = substitute(system('git -C '.file_dir.' rev-parse --show-prefix'), '\n', '', 'g')
     return url.'/tree/'.hash.'/'.dir.expand('%:t')
 endfunction
 
