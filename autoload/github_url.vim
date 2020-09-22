@@ -15,6 +15,10 @@ function! s:gen_url()
         let tmp = systemlist('git -C '.file_dir.' config --get remote.'.remote.'.url')
         if !v:shell_error
             let url = tmp[0]
+            let matcher = matchlist(url, 'git@\(.\+\):\(.\+\).git')
+            if !empty(matcher)
+                let url = 'https://'.matcher[1].'/'.matcher[2]
+            endif
         endif
     endif
     if !exists('url')
